@@ -17,7 +17,8 @@ public class Main {
         persona.setEstadoCivil("Soltero");
         persona.setTelefono("999000001");
 
-        PersonaService personaService = new PersonaServiceImpl();
+//        PersonaService personaService = new PersonaServiceImpl();
+        PersonaService personaService = PersonaServiceImpl.getInstance();
         personaService.crearPersona(persona);
 
         System.out.println(personaService.listarPersonas());

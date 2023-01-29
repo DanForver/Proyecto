@@ -1,14 +1,28 @@
 package org.example.service.impl;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.example.model.Persona;
 import org.example.service.PersonaService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonaServiceImpl implements PersonaService {
 
     protected final List<Persona> personas = new ArrayList<>();
+
+    private static PersonaService personaService = null;
+
+    public static PersonaService getInstance() {
+        if (personaService == null) {
+            System.out.println("Creando Instancia");
+            personaService = new PersonaServiceImpl();
+        }
+        System.out.println("Retornando Instancia");
+        return personaService;
+    }
 
     @Override
     public void crearPersona(Persona persona) {
