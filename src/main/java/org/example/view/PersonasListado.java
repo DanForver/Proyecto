@@ -4,6 +4,7 @@
  */
 package org.example.view;
 
+import javax.swing.table.DefaultTableModel;
 import org.example.service.PersonaService;
 import org.example.service.impl.PersonaServiceImpl;
 
@@ -19,8 +20,18 @@ public class PersonasListado extends javax.swing.JFrame {
     
     protected final PersonaService personaRegistro = PersonaServiceImpl.getInstance();
     
+    protected final DefaultTableModel dtm = new DefaultTableModel();
+    
     public PersonasListado() {
         initComponents();
+        
+        dtm.addColumn("ID");
+        dtm.addColumn("nombre");
+        dtm.addColumn("sexo");
+        dtm.addColumn("DNI");
+
+        this.jTable1.setModel(dtm);
+        
     }
 
     /**
@@ -33,6 +44,8 @@ public class PersonasListado extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,21 +56,41 @@ public class PersonasListado extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jButton1)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jButton1)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
         );
 
         pack();
@@ -68,6 +101,10 @@ public class PersonasListado extends javax.swing.JFrame {
 
         for (var persona: personaRegistro.listarPersonas()) {
             System.out.println(persona);
+            
+            Object [] datos = { persona.getIdUsuarios(), persona.getNombre(), persona.getSexo(), persona.getDni() };
+            
+            dtm.addRow(datos);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -109,5 +146,7 @@ public class PersonasListado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

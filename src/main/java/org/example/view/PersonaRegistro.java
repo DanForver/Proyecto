@@ -4,9 +4,12 @@
  */
 package org.example.view;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.example.model.Persona;
 import org.example.service.PersonaService;
 import org.example.service.impl.PersonaServiceImpl;
+import org.example.util.SexoCatalogo;
 
 /**
  *
@@ -46,13 +49,13 @@ public class PersonaRegistro extends javax.swing.JFrame {
         txtNombre4 = new javax.swing.JTextField();
         txtApePat = new javax.swing.JTextField();
         txtApeMat = new javax.swing.JTextField();
-        txtEstadoCivil = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtDNI = new javax.swing.JTextField();
         txtFechaNacimiento = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,6 +91,8 @@ public class PersonaRegistro extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -118,7 +123,7 @@ public class PersonaRegistro extends javax.swing.JFrame {
                             .addComponent(txtNombre4)
                             .addComponent(txtApePat, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                             .addComponent(txtApeMat)
-                            .addComponent(txtEstadoCivil)))
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(87, 87, 87)
@@ -129,7 +134,7 @@ public class PersonaRegistro extends javax.swing.JFrame {
                                 .addComponent(jButton2)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))))
-                .addContainerGap(290, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +154,7 @@ public class PersonaRegistro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -170,7 +175,7 @@ public class PersonaRegistro extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,14 +185,14 @@ public class PersonaRegistro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,13 +206,25 @@ public class PersonaRegistro extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         var persona = new Persona();
-        persona.setDni(this.txtDNI.getText());
+        persona.setDni(Integer.valueOf(this.txtDNI.getText()));
         persona.setNombre(this.txtNombre4.getText());
-        persona.setApellidoMaterno(this.txtApeMat.getText());
-        persona.setApellidoPaterno(this.txtApePat.getText());
+//        persona.setApellidoMaterno(this.txtApeMat.getText());
+//        persona.setApellidoPaterno(this.txtApePat.getText());
         persona.setEmail(this.txtEmail.getText());
-        persona.setEstadoCivil(this.txtEstadoCivil.getText());
-        persona.setTelefono(this.txtTelefono.getText());
+        
+        String sexo = this.jComboBox1.getSelectedItem().toString();
+        
+        SexoCatalogo sexoOps = SexoCatalogo.valueOf(sexo);
+        
+        persona.setSexo(sexoOps.toString());
+        
+        String sDate1 = this.txtFechaNacimiento.getText();
+        
+        try {
+            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            persona.setFechaNacimiento(date1);
+        } catch (Exception e) {
+        }
         
         personaRegistro.crearPersona(persona);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -250,6 +267,7 @@ public class PersonaRegistro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -263,7 +281,6 @@ public class PersonaRegistro extends javax.swing.JFrame {
     private javax.swing.JTextField txtApePat;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEstadoCivil;
     private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombre4;
     private javax.swing.JTextField txtTelefono;

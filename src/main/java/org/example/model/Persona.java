@@ -4,19 +4,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Persona {
 
+    private Integer idUsuarios;
     private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String estadoCivil;
+
+    private String sexo;
+//    private String apellidoPaterno;
+//    private String apellidoMaterno;
+//    private String estadoCivil;
     private String email;
-    private String dni;
-    private String fechaNacimiento;
-    private String telefono;
+    private Integer dni;
+    private Date fechaNacimiento;
+//    private String telefono;
 
 //    public Persona() {
 //    }
